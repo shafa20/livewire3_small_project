@@ -26,5 +26,5 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/todo', ProductCrud::class);
+    Route::get('/todo', ProductCrud::class)->name('todo');
 });

@@ -1,3 +1,5 @@
+
+</nav>
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +17,31 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('todo') }}" :active="request()->routeIs('todo')">
+                        {{ __('Todo') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#" :active="false">
+                        {{ __('Menu 2') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#" :active="false">
+                        {{ __('Menu 3') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#" :active="false">
+                        {{ __('Menu 4') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#" :active="false">
+                        {{ __('Menu 5') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#" :active="false">
+                        {{ __('Menu 6') }}
+                    </x-nav-link>
                 </div>
+              
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
