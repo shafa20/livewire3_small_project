@@ -4,14 +4,14 @@
                 <div class="max-w-xl">
                 <section>
                 @if (session()->has('success'))
-                    <div class="relative flex flex-col sm:flex-row sm:items-center bg-gray-200 dark:bg-green-700 shadow rounded-md py-5 pl-6 pr-8 sm:pr-6 mb-3 mt-3">
+                    <div class="relative flex flex-col sm:flex-row sm:items-center bg-gray-200 shadow rounded-md py-5 pl-6 pr-8 sm:pr-6 mb-3 mt-3">
                         <div class="flex flex-row items-center border-b sm:border-b-0 w-full sm:w-auto pb-4 sm:pb-0">
-                            <div class="text-green-600" dark:text-gray-400">
+                            <div class="text-green-600"">
                                 <svg class="w-8 sm:w-7 h-8 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
                             <div class="text-lg font-medium font-bold ml-3 text-green-600">Success!.</div>
                         </div>
-                        <div class="text-lg tracking-wide text-green-600 dark:text-white mt-4 sm:mt-0 sm:ml-4"> {{ session('success') }}</div>
+                        <div class="text-lg tracking-wide text-green-600 mt-4 sm:mt-0 sm:ml-4"> {{ session('success') }}</div>
                         <div class="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
                             <div wire:click="dismissSuccessMessage" class="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -29,7 +29,7 @@
                         <div class="relative bg-gray-200 p-8 rounded shadow-lg w-1/2">
                             <!-- Modal content goes here -->
                             <svg wire:click.prevent="$set('isOpen', false)"
-                            class="ml-auto w-6 h-6 text-gray-900 dark:text-gray-900 cursor-pointer fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                            class="ml-auto w-6 h-6 text-gray-900 cursor-pointer fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
                        </svg>	
                             <h2 class="text-2xl font-bold mb-4">{{ $postId ? 'Edit Post' : 'Create Post' }}</h2>
@@ -73,8 +73,8 @@
                     @endif
                 </section>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 Title
@@ -92,8 +92,8 @@
                     </thead>
                     @forelse ($posts as $post)
                     <tbody wire:key="{{ $post->id }}">
-                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr class="bg-white border-b">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {{$post->title}}
                             </th>
                             <td class="px-6 py-4">
