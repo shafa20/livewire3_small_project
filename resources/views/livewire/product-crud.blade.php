@@ -6,17 +6,20 @@
                 @if (session()->has('success'))
                     <div class="relative flex flex-col sm:flex-row sm:items-center bg-gray-200 dark:bg-green-700 shadow rounded-md py-5 pl-6 pr-8 sm:pr-6 mb-3 mt-3">
                         <div class="flex flex-row items-center border-b sm:border-b-0 w-full sm:w-auto pb-4 sm:pb-0">
-                            <div class="text-green-500" dark:text-gray-500>
-                                <svg class="w-6 sm:w-5 h-6 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div class="text-green-600" dark:text-gray-400">
+                                <svg class="w-8 sm:w-7 h-8 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
-                            <div class="text-sm font-medium ml-3">Success!.</div>
+                            <div class="text-lg font-medium font-bold ml-3 text-green-600">Success!.</div>
                         </div>
-                        <div class="text-sm tracking-wide text-gray-500 dark:text-white mt-4 sm:mt-0 sm:ml-4"> {{ session('success') }}</div>
+                        <div class="text-lg tracking-wide text-green-600 dark:text-white mt-4 sm:mt-0 sm:ml-4"> {{ session('success') }}</div>
                         <div class="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <div wire:click="dismissSuccessMessage" class="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </div>
                         </div>
                     </div>
                 @endif
+
                     <div class="my-4">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" wire:click="create">Add Post</button>
                     </div>
@@ -28,9 +31,7 @@
                             <svg wire:click.prevent="$set('isOpen', false)"
                             class="ml-auto w-6 h-6 text-gray-900 dark:text-gray-900 cursor-pointer fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
-                       </svg>
-                           
-                          		
+                       </svg>	
                             <h2 class="text-2xl font-bold mb-4">{{ $postId ? 'Edit Post' : 'Create Post' }}</h2>
 
                             <form wire:submit.prevent="{{ $postId ? 'update' : 'store' }}" enctype="multipart/form-data">
@@ -43,6 +44,16 @@
                                 <div class="mb-4">
                                     <label for="image" class="block text-gray-700 font-bold mb-2">Image:</label>
                                     <input wire:model="image" type="file" id="image" accept="image/jpeg, image/png" class="w-full border border-gray-300 px-4 py-2 rounded">
+                                    @if ($imagePreview)
+                                        <img src="{{ $imagePreview }}" alt="Image Preview" style="width: 80px; height: 100px;" class="mt-2">
+                                    @endif
+
+                                    @if ($postId && !$imagePreview)
+                                        <td class="px-6 py-4">
+                                            <img src="{{ asset('storage/' . $image) }}" alt="Post Image" style="width: 80px; height: 100px;">
+                                        </td>
+                                    @endif
+
                                     <span class="text-red-500">@error('image') {{ $message }} @enderror</span>
                                 </div>
 
@@ -57,7 +68,6 @@
                                     <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" wire:click="closeModal">Cancel</button>
                                 </div>
                             </form>
- 
                         </div>
                     </div>
                     @endif
