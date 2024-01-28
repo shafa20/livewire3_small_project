@@ -33,8 +33,12 @@
                         {{ __('Item') }}
                     </x-nav-link>
 
-                    <x-nav-link href="#" :active="false">
+                    <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
                         {{ __('Role') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#" :active="false">
+                        {{ __('User') }}
                     </x-nav-link>
                 </div>
               
