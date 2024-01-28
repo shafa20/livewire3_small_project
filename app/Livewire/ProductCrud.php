@@ -21,7 +21,7 @@ class ProductCrud extends Component
     public $image;
     #[Rule('required|min:3')]
     public $description;
-
+    public $counter = 0;
     public function updatedImage()
     {
         $this->validate([
@@ -135,7 +135,7 @@ class ProductCrud extends Component
     }
 
     public function render()
-    {
+    {   $this->counter = 0;
         return view('livewire.product-crud',[
             'posts' => Todo::paginate(5),
         ]);

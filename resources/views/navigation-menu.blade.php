@@ -21,24 +21,20 @@
                         {{ __('Todo') }}
                     </x-nav-link>
 
-                    <x-nav-link href="#" :active="false">
-                        {{ __('Menu 2') }}
+                    <x-nav-link href="{{ route('brands') }}" :active="request()->routeIs('brands')">
+                        {{ __('Brand') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="{{ route('models') }}" :active="request()->routeIs('models')">
+                        {{ __('Model') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="{{ route('items') }}" :active="request()->routeIs('items')">
+                        {{ __('Item') }}
                     </x-nav-link>
 
                     <x-nav-link href="#" :active="false">
-                        {{ __('Menu 3') }}
-                    </x-nav-link>
-
-                    <x-nav-link href="#" :active="false">
-                        {{ __('Menu 4') }}
-                    </x-nav-link>
-
-                    <x-nav-link href="#" :active="false">
-                        {{ __('Menu 5') }}
-                    </x-nav-link>
-
-                    <x-nav-link href="#" :active="false">
-                        {{ __('Menu 6') }}
+                        {{ __('Role') }}
                     </x-nav-link>
                 </div>
               

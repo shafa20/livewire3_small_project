@@ -22,7 +22,7 @@
                 @endif
 
                     <div class="my-4">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" wire:click="create">Add Post</button>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" wire:click="create">Add Model</button>
                     </div>
                     @if($isOpen)
                     <div class="fixed inset-0 flex items-center justify-center z-50">
@@ -36,32 +36,28 @@
                             <h2 class="text-2xl font-bold mb-4">{{ $postId ? 'Edit Post' : 'Create Post' }}</h2>
 
                             <form wire:submit.prevent="{{ $postId ? 'update' : 'store' }}" enctype="multipart/form-data">
-                                <div class="mb-4">
-                                    <label for="title" class="block text-gray-700 font-bold mb-2">Title:</label>
-                                    <input wire:model="title" type="text" id="title" class="w-full border border-gray-300 px-4 py-2 rounded">
+                            <div class="mb-4">
+                                <label for="brand_id" class="block text-gray-700 font-bold mb-2">Brand:</label>
+                                <select wire:model="brand_id" id="brand_id" class="w-full border border-gray-300 px-4 py-2 rounded">
+                                    <option value="">Select a brand</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
 
-                                    <span class="text-red-500">@error('title') {{ $message }} @enderror</span>
+                                <span class="text-red-500">@error('brand_id') {{ $message }} @enderror</span>
+                            </div>
+  
+                                 <div class="mb-4">
+                                    <label for="name" class="block text-gray-700 font-bold mb-2">name:</label>
+                                    <input wire:model="name" type="text" id="name" class="w-full border border-gray-300 px-4 py-2 rounded">
+
+                                    <span class="text-red-500">@error('name') {{ $message }} @enderror</span>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="image" class="block text-gray-700 font-bold mb-2">Image:</label>
-                                    <input wire:model="image" type="file" id="image" accept="image/jpeg, image/png" class="w-full border border-gray-300 px-4 py-2 rounded">
-                                    @if ($imagePreview)
-                                        <img src="{{ $imagePreview }}" alt="Image Preview" style="width: 80px; height: 100px;" class="mt-2">
-                                    @endif
-
-                                    @if ($postId && !$imagePreview)
-                                        <td class="px-6 py-4">
-                                            <img src="{{ asset('storage/' . $image) }}" alt="Post Image" style="width: 80px; height: 100px;">
-                                        </td>
-                                    @endif
-
-                                    <span class="text-red-500">@error('image') {{ $message }} @enderror</span>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="description" class="block text-gray-700 font-bold mb-2">description:</label>
-                                    <textarea wire:model="description" id="description" rows="4" class="w-full border border-gray-300 px-4 py-2 rounded"></textarea>
-                                      <span class="text-red-500">@error('description') {{ $message }} @enderror</span>
+                                    <label for="entry_date" class="block text-gray-700 font-bold mb-2">entry_date:</label>
+                                    <input wire:model="entry_date" type="date" id="entry_date" class="w-full border border-gray-300 px-4 py-2 rounded">
+                                      <span class="text-red-500">@error('entry_date') {{ $message }} @enderror</span>
                                 </div>
                                 <div class="flex justify-end">
  
@@ -78,16 +74,17 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                    Serial No
+                                Serial No
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Title
+                                name
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Image
+                                Brand name
                             </th>
+                          
                             <th scope="col" class="px-6 py-3">
-                                Description
+                                entry_date
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Action
@@ -101,13 +98,13 @@
                         {{ ++$counter }}
                         </td>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                {{$post->title}}
+                                {{$post->name}}
                             </th>
                             <td class="px-6 py-4">
-                                <img src="{{ Storage::url($post->image) }}" alt="Post Image" style="width: 80px; height: 100px;">
+                                {{ $post->brand->name }}
                             </td>
                             <td class="px-6 py-4">
-                                {{$post->description}}
+                               {{ \Carbon\Carbon::parse($post->entry_date)->format('M d, Y') }}
                             </td>
 
                             <td class="px-6 py-4">

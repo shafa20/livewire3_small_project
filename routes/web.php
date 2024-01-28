@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\ProductCrud;
+use App\Livewire\Brand;
+use App\Livewire\Model;
+use App\Livewire\Item;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,4 +30,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     Route::get('/todo', ProductCrud::class)->name('todo');
+    Route::get('/brands', Brand::class)->name('brands');
+    Route::get('/models', Model::class)->name('models');
+    Route::get('/items', Item::class)->name('items');
 });
