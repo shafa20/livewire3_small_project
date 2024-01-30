@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -12,6 +13,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasPermissionTo('user.list')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $data = User::latest()->get();
         $inactiveUsers = $data->where('status', false)->count();
         $admin = $data->where('is_admin', true)->count();
@@ -29,6 +34,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->hasPermissionTo('user.create')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $roles = Role::latest()->get();
         return view('user.create',compact('roles'));
     }
@@ -72,6 +81,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if (!Auth::user()->hasPermissionTo('user.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $roles = Role::latest()->get();
         $data = $user->roles()->pluck('id')->toArray();
         return view('user.edit', compact('user','roles','data'));
@@ -108,6 +121,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (!Auth::user()->hasPermissionTo('user.delete')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $user->delete();
 
         session()->flash('success', 'User deleted successfully');

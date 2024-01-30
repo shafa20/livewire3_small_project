@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests\RoleFormRequest;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 
 
 class RoleController extends Controller
@@ -19,6 +20,10 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasPermissionTo('role.list')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $roles = Role::with('permissions')->latest()->get();
         return view('role.index',compact('roles'));
     }
@@ -28,10 +33,11 @@ class RoleController extends Controller
      */
     public function create()
     {
-       
+        if (!Auth::user()->hasPermissionTo('role.create')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $permissions = Permission::all();
-        // $permission_groups = User::getPermissionGroup();
-
         return view('role.create',compact('permissions'));
     }
 
@@ -68,6 +74,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        if (!Auth::user()->hasPermissionTo('role.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $permissions = Permission::all();
         $role = Role::with('permissions')->find($id);
         $data = $role->permissions()->pluck('id')->toArray();
@@ -98,6 +108,10 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
        // abort_if(!userCan('role.delete'), 403);
+       if (!Auth::user()->hasPermissionTo('role.delete')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
 
         $role->delete();
          session()->flash('success', 'Role has been Deleted!');

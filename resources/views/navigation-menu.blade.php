@@ -32,14 +32,17 @@
                     <x-nav-link href="{{ route('items') }}" :active="request()->routeIs('items')">
                         {{ __('Item') }}
                     </x-nav-link>
-
+                    @can('role.list')
                     <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
                         {{ __('Role') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('user.list')
                     <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
                         {{ __('User') }}
                     </x-nav-link>
+                    @endcan
+                   
                 </div>
               
             </div>

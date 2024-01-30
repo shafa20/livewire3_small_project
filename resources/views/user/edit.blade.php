@@ -18,10 +18,13 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+             
                 <div class="flex justify-between items-center p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                     <h2>Edit User</h2>
                     <a href="{{ route('users.index') }}" class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">All User</a>
                 </div>
+               
+               
                 <form class="p-5 lg:max-w-4xl mx-auto dropzone" action="{{ route('users.update', $user->id) }}" method="POST">
                     <div class="flex gap-6 flex-wrap md:flex-nowrap">
                         <div class="w-1/2 mx-auto">
