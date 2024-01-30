@@ -19,7 +19,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::latest()->get();
+        $roles = Role::with('permissions')->latest()->get();
         return view('role.index',compact('roles'));
     }
 
@@ -43,8 +43,13 @@ class RoleController extends Controller
         $request->validate([
             'name'=> 'required|unique:roles,name',
         ]);
-        $role = Role::create($request->only('name'));
-        $role->syncPermissions($request->permissions);
+        $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('id', $request->permissions)->get();
+            $role->syncPermissions($permissions);
+        }
+        
+         //$role->syncPermissions($request->permissions);
 
         session()->flash('success', 'Role Created!');
         return redirect()->route('roles.index');
@@ -61,28 +66,30 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view('role.edit');
+        $permissions = Permission::all();
+        $role = Role::with('permissions')->find($id);
+        $data = $role->permissions()->pluck('id')->toArray();
+        return view('role.edit',compact('permissions' ,'role','data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update($request, $id)
+    public function update(Request $request, Role $role)
     {
-        // abort_if(!userCan('role.update'), 403);
-
-        // try {
-        //     UpdateRole::update($request, $role);
-
-        //     session()->flash('success', 'Role Updated!');
-        //     return back();
-        // } catch (\Throwable $th) {
-
-        //     session()->flash('Error', 'Something is wrong');
-        //     return back();
-        // }
+       
+        $request->validate([
+            'name' => "required|unique:roles,name,{$role->id}",
+        ]);
+        $role->update(['name' => $request->name]);
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('id', $request->permissions)->get();
+            $role->syncPermissions($permissions);
+        }
+        session()->flash('success', 'Role has been Updated!');
+        return back();
     }
 
     /**
@@ -92,15 +99,9 @@ class RoleController extends Controller
     {
        // abort_if(!userCan('role.delete'), 403);
 
-        try {
-            if (!is_null($role)) {
-                $role->delete();
-                session()->flash('success', 'Role Deleted!');
-            }
-            return back();
-        } catch (\Throwable $th) {
-            session()->flash('error', 'Something is wrong');
-            return back();
-        }
+        $role->delete();
+         session()->flash('success', 'Role has been Deleted!');
+         return back();
+            
     }
 }

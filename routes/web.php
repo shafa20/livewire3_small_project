@@ -6,6 +6,7 @@ use App\Livewire\Brand;
 use App\Livewire\Model;
 use App\Livewire\Item;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,5 +36,6 @@ Route::middleware([
     Route::get('/models', Model::class)->name('models');
     Route::get('/items', Item::class)->name('items');
     Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
 
 });

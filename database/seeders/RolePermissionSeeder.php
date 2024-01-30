@@ -14,44 +14,43 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $role= Role::firstOrCreate(['name' => 'admin']);
-         // Todo Permissions
-         Permission::firstOrCreate(['name' => 'tod.list']);
-         Permission::firstOrCreate(['name' => 'todo.create']);
-         Permission::firstOrCreate(['name' => 'todo.edit']);
-         Permission::firstOrCreate(['name' => 'todo.delete']);
- 
-         // Brand Permissions
-         Permission::firstOrCreate(['name' => 'brand.list']);
-         Permission::firstOrCreate(['name' => 'brand.create']);
-         Permission::firstOrCreate(['name' => 'brand.edit']);
-         Permission::firstOrCreate(['name' => 'brand.delete']);
-
-          // Model Permissions
-          Permission::firstOrCreate(['name' => 'model.list']);
-          Permission::firstOrCreate(['name' => 'model.create']);
-          Permission::firstOrCreate(['name' => 'model.edit']);
-          Permission::firstOrCreate(['name' => 'model.delete']); 
-
-        // Item Permissions
-         Permission::firstOrCreate(['name' => 'item.list']);
-         Permission::firstOrCreate(['name' => 'item.create']);
-         Permission::firstOrCreate(['name' => 'item.edit']);
-         Permission::firstOrCreate(['name' => 'item.delete']);
-         // ToDo: Add more permissions dynamically with AH
- 
-         // Role Permissions
-         Permission::firstOrCreate(['name' => 'role.list']);
-         Permission::firstOrCreate(['name' => 'role.create']);
-         Permission::firstOrCreate(['name' => 'role.edit']);
-         Permission::firstOrCreate(['name' => 'role.delete']);
-
-          // Users Permissions
-          Permission::firstOrCreate(['name' => 'user.list']);
-          Permission::firstOrCreate(['name' => 'user.create']);
-          Permission::firstOrCreate(['name' => 'user.edit']);
-          Permission::firstOrCreate(['name' => 'user.delete']);
-
+        $role= Role::Create(['name' => 'admin']);
+        $permissions = [
+          ['name' => 'tod.list'],
+          ['name' => 'todo.create'],
+          ['name' => 'tod.edit'],
+          ['name' => 'todo.delete'],
+      
+          ['name' => 'brand.list'],
+          ['name' => 'brand.create'],
+          ['name' => 'brand.edit'],
+          ['name' => 'brand.delete'],
+      
+          ['name' => 'model.list'],
+          ['name' => 'model.create'],
+          ['name' => 'model.edit'],
+          ['name' => 'model.delete'],
+      
+          ['name' => 'item.list'],
+          ['name' => 'item.create'],
+          ['name' => 'item.edit'],
+          ['name' => 'item.delete'],
+      
+          ['name' => 'role.list'],
+          ['name' => 'role.create'],
+          ['name' => 'role.edit'],
+          ['name' => 'role.delete'],
+      
+          ['name' => 'user.list'],
+          ['name' => 'user.create'],
+          ['name' => 'user.edit'],
+          ['name' => 'user.delete'],
+      ];
+      
+      foreach ($permissions as $item) {
+          Permission::create($item);
+      }
+      
         $role->syncPermissions(Permission::all());
 
         $user =User::first();
