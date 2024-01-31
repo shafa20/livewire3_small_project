@@ -47,7 +47,9 @@
                         {{ __('User') }}
                     </x-nav-link>
                     @endcan
-                   
+                    <x-nav-link href="{{ route('students.index') }}" :active="request()->routeIs('students.index')">
+                        {{ __('Student') }}
+                    </x-nav-link>
                 </div>
               
             </div>

@@ -7,6 +7,7 @@ use App\Livewire\Model;
 use App\Livewire\Item;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/students/export-to-excel', [StudentController::class, 'exportToExcel'])->name('students.exportToExcel');
 
 Route::middleware([
     'auth:sanctum',
@@ -35,7 +37,10 @@ Route::middleware([
     Route::get('/brands', Brand::class)->name('brands');
     Route::get('/models', Model::class)->name('models');
     Route::get('/items', Item::class)->name('items');
+
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::resource('students', StudentController::class);
+
 
 });
