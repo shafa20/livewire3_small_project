@@ -84,9 +84,11 @@
                         <th scope="col" class="py-3 px-6">
                             Status
                         </th>
+                        @if(auth()->user()->can('user.edit') ||  auth()->user()->can('user.delete'))
                         <th scope="col" class="py-3 px-6">
                             Action
                         </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>

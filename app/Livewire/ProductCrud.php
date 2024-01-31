@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads; 
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 class ProductCrud extends Component
 {
     use WithFileUploads, WithPagination;        
@@ -33,6 +34,10 @@ class ProductCrud extends Component
 
     public function create()
     {
+        if (!Auth::user()->hasPermissionTo('todo.create')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $this->reset('title','image','description','postId','imagePreview');
         $this->openModal();
     }
@@ -61,6 +66,10 @@ class ProductCrud extends Component
 
     public function edit($id)
     {
+        if (!Auth::user()->hasPermissionTo('todo.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $post = Todo::findOrFail($id);
        // dd($post);
         $this->postId = $id;
@@ -110,6 +119,10 @@ class ProductCrud extends Component
     
     public function delete($id)
     {
+        if (!Auth::user()->hasPermissionTo('todo.delete')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $post = Todo::find($id);
 
         if ($post) {
@@ -135,7 +148,12 @@ class ProductCrud extends Component
     }
 
     public function render()
-    {   $this->counter = 0;
+    {  
+         if (!Auth::user()->hasPermissionTo('todo.list')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
+         $this->counter = 0;
         return view('livewire.product-crud',[
             'posts' => Todo::paginate(5),
         ]);

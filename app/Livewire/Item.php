@@ -8,6 +8,7 @@ use App\Models\Models;
 use App\Models\Items;
 use Livewire\WithPagination;
 use Livewire\Attributes\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class Item extends Component
 {
@@ -31,6 +32,11 @@ class Item extends Component
 
     public function mount()
     {
+        if (!Auth::user()->hasPermissionTo('item.list')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
+
         $this->brands = Brands::all();
         $this->models = Models::all();
        
@@ -38,6 +44,10 @@ class Item extends Component
    
     public function create()
     {
+        if (!Auth::user()->hasPermissionTo('item.create')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $this->reset('brand_id', 'model_id', 'name', 'entry_date', 'postId');
         $this->openModal();
     }
@@ -59,6 +69,10 @@ class Item extends Component
 
     public function edit($id)
     {
+        if (!Auth::user()->hasPermissionTo('item.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $post = Items::findOrFail($id);
         // dd($post);
         $this->postId = $id;
@@ -90,6 +104,10 @@ class Item extends Component
 
     public function delete($id)
     {
+        if (!Auth::user()->hasPermissionTo('item.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $post = Items::find($id);
         $post->delete();
         session()->flash('success', 'Model deleted successfully.');

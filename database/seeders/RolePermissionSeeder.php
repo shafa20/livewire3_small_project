@@ -16,9 +16,9 @@ class RolePermissionSeeder extends Seeder
     {
         $role= Role::Create(['name' => 'admin']);
         $permissions = [
-          ['name' => 'tod.list'],
+          ['name' => 'todo.list'],
           ['name' => 'todo.create'],
-          ['name' => 'tod.edit'],
+          ['name' => 'todo.edit'],
           ['name' => 'todo.delete'],
       
           ['name' => 'brand.list'],

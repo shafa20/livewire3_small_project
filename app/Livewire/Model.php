@@ -7,6 +7,7 @@ use App\Models\Brands;
 use App\Models\Models;
 use Livewire\WithPagination;
 use Livewire\Attributes\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class Model extends Component
 {
@@ -24,10 +25,18 @@ class Model extends Component
     public $counter = 0;
     public function mount()
     {
+        if (!Auth::user()->hasPermissionTo('model.list')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $this->brands = Brands::all();
     }
     public function create()
     {
+        if (!Auth::user()->hasPermissionTo('model.create')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $this->reset('brand_id','name', 'entry_date', 'postId');
         $this->openModal();
     }
@@ -49,6 +58,10 @@ class Model extends Component
 
     public function edit($id)
     {
+        if (!Auth::user()->hasPermissionTo('model.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $post = Models::findOrFail($id);
         // dd($post);
         $this->postId = $id;
@@ -83,6 +96,10 @@ class Model extends Component
 
     public function delete($id)
     {
+        if (!Auth::user()->hasPermissionTo('model.delete')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $post = Models::find($id);
         $post->delete();
         session()->flash('success', 'Model deleted successfully.');

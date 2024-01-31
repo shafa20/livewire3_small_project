@@ -17,21 +17,26 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @can('todo.list')
                     <x-nav-link href="{{ route('todo') }}" :active="request()->routeIs('todo')">
                         {{ __('Todo') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('brand.list')
                     <x-nav-link href="{{ route('brands') }}" :active="request()->routeIs('brands')">
                         {{ __('Brand') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('model.list')
                     <x-nav-link href="{{ route('models') }}" :active="request()->routeIs('models')">
                         {{ __('Model') }}
                     </x-nav-link>
-
+                    @endcan
+                    @can('item.list')
                     <x-nav-link href="{{ route('items') }}" :active="request()->routeIs('items')">
                         {{ __('Item') }}
                     </x-nav-link>
+                    @endcan
                     @can('role.list')
                     <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles.index')">
                         {{ __('Role') }}

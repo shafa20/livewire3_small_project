@@ -45,9 +45,11 @@
                             <th scope="col" class="py-3 px-6">
                                 Permissions
                             </th>
+                            @if(auth()->user()->can('role.edit') ||  auth()->user()->can('role.delete'))
                             <th scope="col" class="py-3 px-6">
                                 Actions
                             </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>

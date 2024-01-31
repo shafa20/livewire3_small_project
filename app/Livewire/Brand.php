@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Brands;
 use Livewire\WithPagination;
 use Livewire\Attributes\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class Brand extends Component
 {
@@ -22,6 +23,10 @@ class Brand extends Component
     public $counter = 0;
     public function create()
     {
+        if (!Auth::user()->hasPermissionTo('brand.create')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $this->reset('name', 'entry_date', 'postId');
         $this->openModal();
     }
@@ -42,6 +47,11 @@ class Brand extends Component
 
     public function edit($id)
     {
+        if (!Auth::user()->hasPermissionTo('brand.edit')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
+
         $post = Brands::findOrFail($id);
         // dd($post);
         $this->postId = $id;
@@ -74,6 +84,11 @@ class Brand extends Component
 
     public function delete($id)
     {
+        if (!Auth::user()->hasPermissionTo('brand.delete')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
+
         $post = Brands::find($id);
         $post->delete();
         session()->flash('success', 'Brand deleted successfully.');
@@ -97,6 +112,10 @@ class Brand extends Component
 
     public function render()
     {
+        if (!Auth::user()->hasPermissionTo('brand.list')) {
+         
+            abort(403, 'Unauthorized action.');
+        }
         $this->counter = 0;
         return view('livewire.brand', [
             'posts' => Brands::paginate(5),
