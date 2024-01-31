@@ -45,6 +45,13 @@ class RolePermissionSeeder extends Seeder
           ['name' => 'user.create'],
           ['name' => 'user.edit'],
           ['name' => 'user.delete'],
+
+          ['name' => 'student.list'],
+          ['name' => 'student.create'],
+          ['name' => 'student.edit'],
+          ['name' => 'student.delete'],
+          ['name' => 'student.import'],
+          ['name' => 'student.export'],
       ];
       
       foreach ($permissions as $item) {

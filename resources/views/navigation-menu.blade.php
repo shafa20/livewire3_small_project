@@ -47,9 +47,11 @@
                         {{ __('User') }}
                     </x-nav-link>
                     @endcan
+                    @can('student.list')
                     <x-nav-link href="{{ route('students.index') }}" :active="request()->routeIs('students.index')">
                         {{ __('Student') }}
                     </x-nav-link>
+                    @endcan
                 </div>
               
             </div>

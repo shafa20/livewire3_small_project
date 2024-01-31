@@ -23,19 +23,27 @@
 
                     <div
                         class="flex rounded-lg mb-4 justify-between items-center py-2 px-6 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                        <button type="button"
-                            class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            Create Student
-                        </button>
+                        @can('student.create')
+                        <a href="{{ route('students.create') }}">
+                            <button type="button"
+                                class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Create Student
+                            </button>
+                        </a>
+                        @endcan
+
+                        @can('student.import')
                         <button type="button"
                             class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Import Student
                         </button>
-                        <button type="button" class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        @endcan
+                        @can('student.export')
+                        <button type="button"
+                            class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             <a href="{{ route('students.exportToExcel') }}" class="text-white">Export Student</a>
                         </button>
-
-
+                        @endcan
                     </div>
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -52,10 +60,11 @@
                                 <th scope="col" class="py-3 px-6">
                                     Registration Number
                                 </th>
+                                @if(auth()->user()->can('student.edit') || auth()->user()->can('student.delete'))
                                 <th scope="col" class="py-3 px-6">
                                     Action
                                 </th>
-
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -83,21 +92,25 @@
                                 </td>
 
                                 <td class="py-4 px-6 flex gap-2">
-
+                                    @can('student.edit')
                                     <a data-tooltip-target="edit-button" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" href="">
+                                        data-bs-placement="top" href="{{ route('students.edit', $student->id) }}">
                                         <x-svg.edit class="w-6 h-6 text-green-400" />
                                     </a>
+                                    @endcan
 
-                                    <form action="" method="POST" class="d-inline">
-
+                                    @can('student.delete')
+                                    <form action="{{ route('students.destroy', $student->id) }}" method="POST"
+                                        class="d-inline">
+                                        @method('DELETE')
+                                        @csrf
                                         <button data-tooltip-target="delete-button" data-bs-toggle="tooltip"
                                             data-bs-placement="top"
-                                            onclick="return confirm('Are you sure you want to delete this item?');">
+                                            onclick="return confirm('Are you sure you want to delete this student information?');">
                                             <x-svg.trash class="w-6 h-6 text-red-400" />
                                         </button>
                                     </form>
-
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach
