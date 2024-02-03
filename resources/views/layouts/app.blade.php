@@ -31,7 +31,6 @@
             <!-- Page Content -->
             <main>
             @yield('content')
-            {{ $slot }}
             </main>
         </div>
         @include('adminlte.sidebar')
