@@ -20,8 +20,6 @@
     <body class="font-sans antialiased">
     @include('adminlte.header')
         <div class="min-h-screen bg-gray-100">
-         
-
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
@@ -30,13 +28,13 @@
                     </div>
                 </header>
             @endif
-
             <!-- Page Content -->
             <main>
             @yield('content')
+            {{ $slot }}
             </main>
         </div>
-        @include('adminlte.sidebar') 
+        @include('adminlte.sidebar')
         @stack('modals')
         @include('adminlte.footer')
         @livewireScripts

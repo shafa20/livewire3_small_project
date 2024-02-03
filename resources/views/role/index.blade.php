@@ -3,13 +3,23 @@
 @section('content')
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 User Role
             </h2>
+            @if(session('success'))
+            <div class="alert alert-success bg-blue-500 text-white" >
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger" style="color:red">
+                {{ session('error') }}
+            </div>
+        @endif
         </div>
 
     </div>
@@ -23,17 +33,6 @@
                             <h2 class="">All Roles
                                 <span class="bg-blue-500 text-white rounded px-1 text-xs py-0.5">10</span>
                             </h2>
-                            @if(session('success'))
-                            <div class="alert alert-success bg-blue-500 text-white">
-                                {{ session('success') }}
-                            </div>
-                            @endif
-
-                            @if(session('error'))
-                            <div class="alert alert-danger" style="color:red">
-                                {{ session('error') }}
-                            </div>
-                            @endif
                             @can('role.create')
                             <a href="{{ route('roles.create') }}">
                                 <button type="button"

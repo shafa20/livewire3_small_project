@@ -1,10 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Livewire\ProductCrud;
+use App\Livewire\Item;
 use App\Livewire\Brand;
 use App\Livewire\Model;
-use App\Livewire\Item;
+use App\Exports\UsersExport;
+use App\Livewire\ProductCrud;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
