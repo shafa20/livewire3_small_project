@@ -162,7 +162,7 @@
                                                     {{ $post->title }}
                                                 </th>
                                                 <td class="px-6 py-4">
-                                                    <img src="{{ Storage::url($post->image) }}" alt="Post Image"
+                                                    <img src="{{ url('/storage/' . $post->image) }}" alt="Post Image"
                                                         style="width: 80px; height: 100px;">
                                                 </td>
                                                 <td class="px-6 py-4">
