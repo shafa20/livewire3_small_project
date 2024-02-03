@@ -18,10 +18,9 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
-
+    @include('adminlte.header')
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+         
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -34,12 +33,12 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+            @yield('content')
             </main>
         </div>
-
+        @include('adminlte.sidebar') 
         @stack('modals')
-
+        @include('adminlte.footer')
         @livewireScripts
     </body>
 </html>
