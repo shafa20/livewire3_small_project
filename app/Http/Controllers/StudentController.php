@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Exports\StudentsExport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentsImport;
 
 class StudentController extends Controller
 {
@@ -112,6 +113,17 @@ class StudentController extends Controller
         return Excel::download(new StudentsExport, $fileName)->deleteFileAfterSend(true);
 
     }
+
+    public function import(Request $request)
+    {
+        Excel::import(new StudentsImport, $request->file('file')->store('temp'));
+
+        session()->flash('success', 'Importing students. Please check later for status.');
+        return back();
+    }
+
+
+
 
     /**
      * Remove the specified resource from storage.

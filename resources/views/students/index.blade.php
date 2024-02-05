@@ -1,16 +1,18 @@
 @extends('layouts.app')
 @section('content')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Students
                 </h2>
-                @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
                 @endif
                 @if (session('error'))
                     <div class="alert alert-danger" style="color:red">
@@ -38,11 +40,33 @@
                                 @endcan
 
                                 @can('student.import')
-                                    <button type="button"
+                                    <button id="importStudentBtn" type="button"
                                         class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Import Student
                                     </button>
+
+                                    <div id="importFormContainer" style="display: none;">
+                                        <form action="{{ route('students.import') }}" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="file" name="file" accept=".xlsx, .xls" required>
+
+                                            <button type="submit"
+                                                class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Import</button>
+                                        </form>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#importStudentBtn").click(function() {
+                                                $("#importStudentBtn").hide();
+                                                $("#importFormContainer").show();
+                                            });
+                                        });
+                                    </script>
                                 @endcan
+
+
                                 @can('student.export')
                                     <button type="button"
                                         class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">

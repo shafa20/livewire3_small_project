@@ -3,9 +3,7 @@
 use App\Livewire\Item;
 use App\Livewire\Brand;
 use App\Livewire\Model;
-use App\Exports\UsersExport;
 use App\Livewire\ProductCrud;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -26,7 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/students/export-to-excel', [StudentController::class, 'exportToExcel'])->name('students.exportToExcel');
-
+Route::post('/students/import', [StudentController::class, 'import'])->name('students.import');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
