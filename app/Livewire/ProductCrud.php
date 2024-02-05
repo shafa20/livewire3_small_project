@@ -5,15 +5,16 @@ namespace App\Livewire;
 use App\Models\Todo;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\WithFileUploads; 
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+
 class ProductCrud extends Component
 {
-    use WithFileUploads, WithPagination;        
-     public $postId;
-     public $imagePreview;
+    use WithFileUploads, WithPagination;
+    public $postId;
+    public $imagePreview;
     public $isOpen = 0;
     #[Rule('required|min:3')]
     public $title;
@@ -35,10 +36,10 @@ class ProductCrud extends Component
     public function create()
     {
         if (!Auth::user()->hasPermissionTo('todo.create')) {
-         
+
             abort(403, 'Unauthorized action.');
         }
-        $this->reset('title','image','description','postId','imagePreview');
+        $this->reset('title', 'image', 'description', 'postId', 'imagePreview');
         $this->openModal();
     }
     public function store()
@@ -52,75 +53,75 @@ class ProductCrud extends Component
             'description' => $this->description,
         ]);
         session()->flash('success', 'Post created successfully.');
-        
-        $this->reset('title','image','description', 'imagePreview');
+
+        $this->reset('title', 'image', 'description', 'imagePreview');
         $this->closeModal();
     }
-  
+
     private function storeImage()
     {
         return $this->image->store('images', 'public');
     }
 
-   
+
 
     public function edit($id)
     {
         if (!Auth::user()->hasPermissionTo('todo.edit')) {
-         
+
             abort(403, 'Unauthorized action.');
         }
         $post = Todo::findOrFail($id);
-       // dd($post);
+        // dd($post);
         $this->postId = $id;
         $this->title = $post->title;
         $this->image = $post->image;
         $this->description = $post->description;
- 
+
         $this->openModal();
     }
-  
 
-   
+
+
     public function update()
-{
-    if ($this->postId) {
-        $post = Todo::findOrFail($this->postId);
+    {
+        if ($this->postId) {
+            $post = Todo::findOrFail($this->postId);
 
-        $this->validate([
-            'title' => 'required|min:3',
-            'description' => 'required|min:3',
-        ]);
-
-        if ($this->image && is_object($this->image)) {
-            // Delete the old image if a new image is uploaded
-            Storage::disk('public')->delete($post->image);
-
-            // Update the image field with the new image path
-            $post->update([
-                'image' => $this->image->store('images', 'public'),
+            $this->validate([
+                'title' => 'required|min:3',
+                'description' => 'required|min:3',
             ]);
+
+            if ($this->image && is_object($this->image)) {
+                // Delete the old image if a new image is uploaded
+                Storage::disk('public')->delete($post->image);
+
+                // Update the image field with the new image path
+                $post->update([
+                    'image' => $this->image->store('images', 'public'),
+                ]);
+            }
+
+            // Update title and description
+            $post->update([
+                'title' => $this->title,
+                'description' => $this->description,
+            ]);
+
+            session()->flash('success', 'Post updated successfully.');
+            $this->closeModal();
+            $this->reset('title', 'image', 'description', 'postId');
         }
-
-        // Update title and description
-        $post->update([
-            'title' => $this->title,
-            'description' => $this->description,
-        ]);
-
-        session()->flash('success', 'Post updated successfully.');
-        $this->closeModal();
-        $this->reset('title', 'image', 'description', 'postId');
     }
-}
 
-    
-    
-    
+
+
+
     public function delete($id)
     {
         if (!Auth::user()->hasPermissionTo('todo.delete')) {
-         
+
             abort(403, 'Unauthorized action.');
         }
         $post = Todo::find($id);
@@ -136,10 +137,10 @@ class ProductCrud extends Component
     {
         session()->forget('success');
     }
-    
+
     public function openModal()
     {
-        $this->isOpen = true; 	
+        $this->isOpen = true;
         $this->resetValidation();
     }
     public function closeModal()
@@ -148,13 +149,13 @@ class ProductCrud extends Component
     }
 
     public function render()
-    {  
-         if (!Auth::user()->hasPermissionTo('todo.list')) {
-         
+    {
+        if (!Auth::user()->hasPermissionTo('todo.list')) {
+
             abort(403, 'Unauthorized action.');
         }
-         $this->counter = 0;
-        return view('livewire.product-crud',[
+        $this->counter = 0;
+        return view('livewire.product-crud', [
             'posts' => Todo::paginate(5),
         ]);
     }
