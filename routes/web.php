@@ -4,6 +4,7 @@ use App\Livewire\Item;
 use App\Livewire\Brand;
 use App\Livewire\Model;
 use App\Livewire\ProductCrud;
+use App\Livewire\UnlimitedManueAndSub;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     Route::get('/todo', ProductCrud::class)->name('todo');
+    Route::get('/manues', UnlimitedManueAndSub::class)->name('manues');
     Route::get('/brands', Brand::class)->name('brands');
     Route::get('/models', Model::class)->name('models');
     Route::get('/items', Item::class)->name('items');

@@ -14,33 +14,35 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $role= Role::Create(['name' => 'admin']);
+        $role= Role::firstOrCreate(['name' => 'admin']);
         $permissions = [
           ['name' => 'todo.list'],
           ['name' => 'todo.create'],
           ['name' => 'todo.edit'],
           ['name' => 'todo.delete'],
-      
+
+          ['name' => 'unlimited_manue_sub.list'],
+
           ['name' => 'brand.list'],
           ['name' => 'brand.create'],
           ['name' => 'brand.edit'],
           ['name' => 'brand.delete'],
-      
+
           ['name' => 'model.list'],
           ['name' => 'model.create'],
           ['name' => 'model.edit'],
           ['name' => 'model.delete'],
-      
+
           ['name' => 'item.list'],
           ['name' => 'item.create'],
           ['name' => 'item.edit'],
           ['name' => 'item.delete'],
-      
+
           ['name' => 'role.list'],
           ['name' => 'role.create'],
           ['name' => 'role.edit'],
           ['name' => 'role.delete'],
-      
+
           ['name' => 'user.list'],
           ['name' => 'user.create'],
           ['name' => 'user.edit'],
@@ -53,11 +55,11 @@ class RolePermissionSeeder extends Seeder
           ['name' => 'student.import'],
           ['name' => 'student.export'],
       ];
-      
+
       foreach ($permissions as $item) {
-          Permission::create($item);
+          Permission::firstOrCreate($item);
       }
-      
+
         $role->syncPermissions(Permission::all());
 
         $user =User::first();

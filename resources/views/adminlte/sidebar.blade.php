@@ -53,6 +53,15 @@
                 </li>
                 @endcan
 
+                @can('unlimited_manue_sub.list')
+                <li class="nav-item">
+                    <a href="{{ route('manues')}}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p class="text"> Unlimited manue & sub </p>
+                    </a>
+                </li>
+                @endcan
+
                 @can('student.list')
                 <li class="nav-item">
                     <a href="{{ route('students.index') }}" class="nav-link">
