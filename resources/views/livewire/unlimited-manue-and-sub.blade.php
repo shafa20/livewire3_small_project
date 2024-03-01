@@ -105,12 +105,16 @@
                                                 </div>
 
                                                 <div class="mb-1">
-                                                    <label for="has_menu" class="block text-gray-700 font-bold mb-2">Has Menu:</label>
-                                                    <select wire:model="has_menu" id="has_menu" class="w-full border border-gray-300 px-4 py-2 rounded" style="color: black; /* Adjust font color */">
+                                                    <label for="has_menu" class="block text-gray-700 font-bold mb-2">Has
+                                                        Menu:</label>
+                                                    <select wire:model="has_menu" id="has_menu"
+                                                        class="w-full border border-gray-300 px-4 py-2 rounded"
+                                                        style="color: black; /* Adjust font color */">
                                                         <option value="">Select Manue</option>
                                                         <option value="0">Initial Menu</option>
-                                                        @foreach($manues as $manue)
-                                                            <option value="{{ $manue->id }}">{{ $manue->title }}</option>
+                                                        @foreach ($manues as $manue)
+                                                            <option value="{{ $manue->id }}">{{ $manue->title }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     <span class="text-red-500">
@@ -121,8 +125,10 @@
                                                 </div>
 
                                                 <div class="mb-1">
-                                                    <label for="status" class="block text-gray-700 font-bold mb-2">Status:</label>
-                                                    <select wire:model="status" id="status" class="w-full border border-gray-300 px-4 py-2 rounded">
+                                                    <label for="status"
+                                                        class="block text-gray-700 font-bold mb-2">Status:</label>
+                                                    <select wire:model="status" id="status"
+                                                        class="w-full border border-gray-300 px-4 py-2 rounded">
                                                         <option value="">Select status</option>
                                                         <option value="1">Active</option>
                                                         <option value="2">Inactive</option>
@@ -149,18 +155,29 @@
                             </section>
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
                                 <ul>
-                                    {{-- Step 1: Display menus with has_manue = 0 --}}
-                                    @foreach($manues->where('has_menu', 0)->where('status', 1)->sortBy('priority') as $manue)
-                                        <li>{{ $manue->title }}</li>
-                                        {{-- Step 2: Display submenus for each menu --}}
-                                        @foreach($manues->where('has_menu', $manue->id)->where('status', 1)->sortBy('priority') as $submenu)
-                                            <li style="padding-left: 20px;"> -> {{ $submenu->title }}</li>
-                                            {{-- Step 3: Display sub-submenus for each submenu --}}
-                                            @foreach($manues->where('has_menu', $submenu->id)->where('status', 1)->sortBy('priority') as $subsubmenu)
-                                                <li style="padding-left: 40px;"> -> {{ $subsubmenu->title }}</li>
+
+                                    @php
+                                        function displayMenu($manues, $parentId, $level = 0)
+                                        {
+                                            $menus = $manues->where('has_menu', $parentId)->where('status', 1)->sortBy('priority');
+                                            foreach ($menus as $menu) {
+                                                echo '<li style="padding-left: ' . ($level * 20) . 'px;"> -> '. $menu->title . '</li>';
+                                                // Recursive call to display submenus
+                                                displayMenu($manues, $menu->id, $level + 1);
+                                            }
+                                        }
+                                    @endphp
+
+                                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
+                                        <ul>
+
+                                            @foreach ($manues->where('has_menu', 0)->where('status', 1)->sortBy('priority') as $manue)
+                                                <li>{{ $manue->title }}</li>
+                                                @php displayMenu($manues, $manue->id); @endphp
                                             @endforeach
-                                        @endforeach
-                                    @endforeach
+                                        </ul>
+                                    </div>
+
                                 </ul>
                             </div>
 
