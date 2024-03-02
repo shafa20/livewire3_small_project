@@ -120,7 +120,7 @@
                     <a href="pages/widgets.html" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Widgets
+                            Chat
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>
