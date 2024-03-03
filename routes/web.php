@@ -43,6 +43,8 @@ Route::middleware([
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('students', StudentController::class);
-
-
+    Route::get('/chats', 'App\Http\Controllers\PusherController@index')->name('chats');
+    Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
+    Route::post('/receive', 'App\Http\Controllers\PusherController@receive');
 });
+
